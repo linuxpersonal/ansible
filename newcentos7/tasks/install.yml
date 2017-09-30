@@ -1,0 +1,17 @@
+--- # Installing Httpd Package
+- name: install epel-release repo
+  yum: pkg=epel-release state=latest update_cache=true
+- name: install software for new centos vm
+  yum: pkg={{ item }} state=latest
+  with_items:
+  - links
+  - bind-utils
+  - nfs-utils
+  - telnet
+  - nethogs
+  - iotop
+- name: Install Chronyd
+  yum: pkg=chrony state=latest
+  notify: Starting Chronyd Service
+- name: Updating system, may take a while
+  raw: yum update -y

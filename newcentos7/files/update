@@ -1,0 +1,21 @@
+#!/bin/bash
+
+date=`date +%d%m%Y`
+
+foldercheck() {
+if [ ! -d /customlogs ]; then 
+echo "/customlogs folder in root does not exist, creating now"
+mkdir /customlogs; fi
+if [ ! -d /customlogs/updatelogs ]; then
+echo "/customlogs/updatelogs in customlogs does not exist, creating now"
+mkdir /customlogs/updatelogs; fi
+}
+
+update() {
+yum update -y
+yum clean packages -y
+yum autoremove -y
+}
+
+foldercheck
+update &>> /customlogs/updatelogs/sysupdate$date.log

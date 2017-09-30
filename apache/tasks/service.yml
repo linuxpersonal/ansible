@@ -1,0 +1,3 @@
+--- # Start Apache Service
+- name: Starting Apache Service
+  service: name=httpd state=started

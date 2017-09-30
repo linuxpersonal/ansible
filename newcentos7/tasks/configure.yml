@@ -1,0 +1,13 @@
+--- # Configuring httpd.conf and sending html file
+- name: Install libselinuxpython
+  raw: yum install libselinux-python
+- name: send CentOS-Base.repo for cache proxy
+  copy: src=CentOS-Base.repo dest=/etc/yum.repos.d/
+- name: send yum.conf for cache proxy
+  copy: src=yum.conf dest=/etc/
+- name: make scripts directory
+  raw: mkdir /scripts||echo skip
+- name: send update script 
+  copy: src=update dest=/scripts
+- name: update script permissions
+  raw: chmod u+x /scripts/update

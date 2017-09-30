@@ -1,0 +1,41 @@
+--- # Installing Vim Package
+- name: install software for vim8
+  yum: pkg={{ item }} state=latest
+  with_items:
+  - ncurses-devel
+  - gcc
+  - python-devel
+  - python34-devel
+  - unzip
+  - git
+  - ctags
+  ignore_errors: yes
+
+- name: create vim directory
+  file: path=/home/vim state=directory
+
+- name: copy master.zip
+  unarchive: src=https://github.com/vim/vim/archive/master.zip dest=/tmp/ remote_src=True
+
+- name: Copy and Execute the script 
+  script: files/compilevim.sh
+
+- name: remove current vim1
+  file: path=/usr/local/bin/vim state=absent
+- name: remove current vim2
+  file: path=/usr/bin/vim state=absent
+
+- name: soft link1
+  raw: ln -s /home/vim/bin/vim /usr/local/bin
+- name: soft link2
+  raw: ln -s /home/vim/bin/vim /usr/bin/vim
+
+- name: permissions
+  raw: chmod 755 /home/vim/bin/vim
+
+- name: Vimrc Copy
+  copy: src=files/vimrc dest=/root/.vimrc
+
+- name: Install Vundle
+  raw: git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  ignore_errors: yes

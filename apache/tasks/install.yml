@@ -1,0 +1,3 @@
+--- # Installing Httpd Package
+- name: install apache
+  yum: pkg=httpd state=latest
