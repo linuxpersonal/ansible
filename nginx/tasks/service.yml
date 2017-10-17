@@ -4,6 +4,4 @@
   with_items:
           - nginx
           - mariadb
-
-- name: Starting PHP-FPM
-  service: name=php-fpm state=started enabled=yes
+          - php-fpm
