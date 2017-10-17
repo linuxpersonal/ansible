@@ -11,10 +11,7 @@
           - mariadb-server
 
 - name: mysqlstart
-  service: name=mariadb state=restarted
-          
-  #- name: mysql_secure_installation
-  #  raw: echo -e "\ny\ny\nmysqlpass123!!\nmysqlpass123!!\ny\ny\ny\ny" | /usr/bin/mysql_secure_installation
+  service: name=mariadb state=started
 
 - name: Install Remi RPM
   yum: pkg=http://rpms.remirepo.net/enterprise/remi-release-7.rpm state=present
