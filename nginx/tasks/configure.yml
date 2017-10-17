@@ -12,3 +12,6 @@
 - name: Send /etc/php-fpm.d/www.conf file
   copy: src=www.conf dest=/etc/php-fpm.d/www.conf
   notify: Restart Phpfpm Service
+
+- name: Mysql Secure Install
+  script: files/mysql.sh
