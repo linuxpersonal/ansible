@@ -1,0 +1,6 @@
+---
+# handlers file for apache
+- name: Restart Nginx Service
+  service: name=nginx state=restarted
+- name: Restart Phpfpm Service
+  service: name=php-fpm state=restarted

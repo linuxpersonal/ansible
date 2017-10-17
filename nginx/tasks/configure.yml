@@ -1,0 +1,14 @@
+--- # Configuring httpd.conf and sending html file
+- name: Send /etc/nginx/conf.d/default.conf file
+  template: src=default.j2 dest=/etc/nginx/conf.d/default.conf
+  with_items:
+          - "{{ inventory_hostname }}"
+  notify: 
+        - Restart Nginx Service
+
+- name: Send index.html
+  copy: src=index.html dest=/var/www/html/index.html
+
+- name: Send /etc/php-fpm.d/www.conf file
+  copy: src=www.conf dest=/etc/php-fpm.d/www.conf
+  notify: Restart Phpfpm Service
