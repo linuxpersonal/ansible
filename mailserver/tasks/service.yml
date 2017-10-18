@@ -1,0 +1,14 @@
+--- #Start/Restart Mail services
+- name: Start Postfix
+  service: name={{ item }} state=started enabled=yes
+  with_items:
+          - postfix
+          - dovecot
+          - spamassassin
+
+- name: Retart Postfix
+  service: name={{ item }} state=restarted enabled=yes
+  with_items:
+          - dovecot
+          - spamassassin
+          - postfix

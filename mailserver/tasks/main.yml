@@ -1,0 +1,7 @@
+---
+# tasks file for apache
+- include: postfix.yml
+- include: conf-postfix.yml
+- include: dovecot.yml
+- include: spamassassin.yml
+- include: service.yml

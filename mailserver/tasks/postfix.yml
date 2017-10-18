@@ -1,0 +1,44 @@
+--- # Installation for mail server
+
+- name: Install Packages
+  yum: pkg={{ item }} state=latest
+  with_items:
+          - wget
+          - mariadb
+          - mariadb-server
+          - postfix
+          - php
+          - php-mysql
+          - php-imap
+          - php-mbstrong
+          - php-common
+
+- name: Start Mariadb
+  service: name=mariadb state=started enabled=yes
+
+- name: Initialise mariadb
+  script: files/mysql.sh
+
+- name: Mysql add postfix               
+  script: postfix.sh  
+            
+- name: Create vmail directory
+  file: path=/var/vmail state=present owner=vmail group=mail mode=0770
+
+- name: Create mail user
+  user: name=vmail state=present groups=mail shell=/sbin/nologin uid=150 home=/var/vmail comment="Virtual Mail User"
+
+- name: Install Postfix
+  unarchive: src=http://downloads.sourceforge.net/project/postfixadmin/postfixadmin/postfixadmin-3.0.2/postfixadmin-3.0.2.tar.gz dest=/var/www/html/ remote_src=True
+
+- name: Copy postfix config.inc.php
+  copy: src=config.inc.php dest=/var/www/html/postfixadmin-3.0.2/config.inc.php
+
+- name: Set folder permissions
+  file: path=/var/www/html/postfixadmin-3.0.2/ owner=nginx group=nginx
+
+- name: Initialise postfixadmin required
+  pause: prompt='Please visit http://{{ inventory_hostname }}/postfixadmin-3.0.2/setup.php, once completed, Press Enter to continue OR Ctrl+c and then "a" to abort'
+
+- name: Create Postfix Admin User
+  raw: bash /var/www/html/postfixadmin-3.0.2/scripts/postfixadmin-cli admin add admin@your_domain_idroot.net --password mysqlpass123!! --password2 mysqlpass123!! --superadmin 1 --active 1

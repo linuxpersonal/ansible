@@ -1,0 +1,25 @@
+--- #Install/Confgire dovecot
+- name: Install Dovecot
+  yum: pkg={{ item }} state=latest
+  with_items:
+          - dovecot
+          - dovecot-mysql
+
+- name: Copy /etc/dovecot/conf.d/10-mail.conf
+  copy: src=dovecot/10-mail.conf dest=/etc/dovecot/conf.d/10-mail.conf
+
+- name: Copy /etc/dovecot/conf.d/10-auth.conf
+  copy: src=dovecot/10-auth.conf dest=/etc/dovecot/conf.d/10-auth.conf
+
+- name: Copy /etc/dovecot/dovecot-sql.conf.ext
+  template: src=dovecot-sql.conf.js2 dest=/etc/dovecot/dovecot-sql.conf.ext
+  with_items: {{ pass }}
+
+- name: Copy /etc/dovecot/conf.d/10-ssl.conf
+  copy: src=dovecot/10-ssl.conf dest=/etc/dovecot/conf.d/10-ssl.conf
+
+- name: Copy /etc/dovecot/conf.d/15-lda.conf
+  copy: src=dovecot/15-lda.conf dest=/etc/dovecot/conf.d/15-lda.conf
+
+- name: Copy /etc/dovecot/conf.d/10-master.conf
+  copy: src=dovecot/10-master.conf dest=/etc/dovecot/conf.d/10-master.conf
