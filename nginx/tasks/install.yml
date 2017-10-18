@@ -11,7 +11,7 @@
           - mariadb-server
 
 - name: mysqlstart
-  service: name=mariadb state=restarted
+  service: name=mariadb state=started
           
   #- name: mysql_secure_installation
   #  raw: echo -e "\ny\ny\nmysqlpass123!!\nmysqlpass123!!\ny\ny\ny\ny" | /usr/bin/mysql_secure_installation
