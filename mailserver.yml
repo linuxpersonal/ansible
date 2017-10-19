@@ -1,0 +1,7 @@
+---
+ - hosts: xen.linuxpersonal.com
+   sudo: yes
+   user: ansible
+   connection: ssh
+   roles:
+    - mailserver
