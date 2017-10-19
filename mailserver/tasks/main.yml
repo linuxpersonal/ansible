@@ -1,7 +1,13 @@
 ---
 # tasks file for apache
 - include: postfix.yml
+  vars:
+         passw: mysqlpass123!!
 - include: conf-postfix.yml
+  vars:
+         passw: mysqlpass123!!
 - include: dovecot.yml
+  vars:
+         passw: mysqlpass123!!
 - include: spamassassin.yml
 - include: service.yml

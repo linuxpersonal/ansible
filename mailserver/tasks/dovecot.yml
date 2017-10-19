@@ -13,7 +13,7 @@
 
 - name: Copy /etc/dovecot/dovecot-sql.conf.ext
   template: src=dovecot-sql.conf.js2 dest=/etc/dovecot/dovecot-sql.conf.ext
-  with_items: {{ pass }}
+  with_items: "{{ passw }}"
 
 - name: Copy /etc/dovecot/conf.d/10-ssl.conf
   copy: src=dovecot/10-ssl.conf dest=/etc/dovecot/conf.d/10-ssl.conf
