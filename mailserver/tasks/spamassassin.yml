@@ -6,7 +6,7 @@
   group: name=spamd state=present
 
 - name: Create spamd user
-  group: name=spamd state=present shell=/bin/false home=/var/log/spamassassin
+  user: name=spamd state=present shell=/bin/false home=/var/log/spamassassin
 
 - name: Permissions for spamd
   file: path=/var/log/spamassassin state=present owner=spamd group=spamd
