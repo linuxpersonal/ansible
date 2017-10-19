@@ -1,5 +1,5 @@
 user = postfixadmin
-password = {{ item }}
+password = {{ item.passw }}
 hosts = localhost
 dbname = postfixadmin
 query = SELECT goto FROM alias WHERE address='%s' AND active = '1'

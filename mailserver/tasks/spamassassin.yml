@@ -9,4 +9,4 @@
   user: name=spamd state=present shell=/bin/false home=/var/log/spamassassin
 
 - name: Permissions for spamd
-  file: path=/var/log/spamassassin state=present owner=spamd group=spamd
+  file: path=/var/log/spamassassin state=directory owner=spamd group=spamd

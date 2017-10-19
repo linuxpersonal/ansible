@@ -3,33 +3,17 @@
 - name: Create/Check Directory Path
   file: path=/etc/postfix/sql state=directory
 
-- name: Create mysql_virtual_alias_domain_catchall_maps.cf
-  template: src=mysql_virtual_alias_domain_catchall_maps.js2 dest=/etc/postfix/sql/mysql_virtual_alias_domain_catchall_maps.cf
-  with_items: "{{ passw }}"
-
-- name: Create mysql_virtual_alias_domain_mailbox_maps.cf
-  template: src=mysql_virtual_alias_domain_mailbox_maps.js2 dest=/etc/postfix/sql/mysql_virtual_alias_domain_mailbox_maps.cf
-  with_items: "{{ passw }}"
-
-- name: Create mysql_virtual_alias_domain_maps.cf
-  template: src=mysql_virtual_alias_domain_maps.js2 dest=/etc/postfix/sql/mysql_virtual_alias_domain_maps.cf
-  with_items: "{{ passw }}"
-
-- name: Create mysql_virtual_alias_maps.cf
-  template: src=mysql_virtual_alias_maps.js2 dest=/etc/postfix/sql/mysql_virtual_alias_maps.cf
-  with_items: "{{ passw }}"
-
-- name: Create mysql_virtual_domains_maps.cf
-  template: src=mysql_virtual_domains_maps.js2 dest=/etc/postfix/sql/mysql_virtual_domains_maps.cf
-  with_items: "{{ passw }}"
-
-- name: Create mysql_virtual_mailbox_limit_maps.cf
-  template: src=mysql_virtual_mailbox_limit_maps.js2 dest=/etc/postfix/sql/mysql_virtual_mailbox_limit_maps.cf
-  with_items: "{{ passw }}"
-
-- name: Create mysql_virtual_mailbox_maps.cf
-  template: src=mysql_virtual_mailbox_maps.js2 dest=/etc/postfix/sql/mysql_virtual_mailbox_maps.cf
-  with_items: "{{ passw }}"
+- name: Create conf postfixfiles
+  template: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+          - { src:'mysql_virtual_alias_domain_catchall_maps.js2', dest: '/etc/postfix/sql/mysql_virtual_alias_domain_catchall_maps.cf', passw: '{{ passw }}' }
+          - { src:'mysql_virtual_alias_domain_catchall_maps.js2', dest: '/etc/postfix/sql/mysql_virtual_alias_domain_catchall_maps.cf', passw: '{{ passw }}' }
+          - { src:'mysql_virtual_alias_domain_mailbox_maps.js2',  dest: '/etc/postfix/sql/mysql_virtual_alias_domain_mailbox_maps.cf',  passw: '{{ passw }}' }
+          - { src:'mysql_virtual_alias_domain_maps.js2',          dest: '/etc/postfix/sql/mysql_virtual_alias_domain_maps.cf',          passw: '{{ passw }}' } 
+          - { src:'mysql_virtual_alias_maps.js2',                 dest: '/etc/postfix/sql/mysql_virtual_alias_maps.cf',                 passw: '{{ passw }}' }
+          - { src:'mysql_virtual_domains_maps.js2',               dest: '/etc/postfix/sql/mysql_virtual_domains_maps.cf',               passw: '{{ passw }}' }
+          - { src:'mysql_virtual_mailbox_limit_maps.js2',         dest: '/etc/postfix/sql/mysql_virtual_mailbox_limit_maps.cf',         passw: '{{ passw }}' }
+          - { src:'mysql_virtual_mailbox_maps.js2',               dest: '/etc/postfix/sql/mysql_virtual_mailbox_maps.cf',               passw: '{{ passw }}' }
 
 - name: Configure /etc/postfix/main.cf
   script: files/main.cf.sh
