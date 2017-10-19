@@ -1,31 +1,39 @@
 --- # Installation for mail server
 
-#- name: Install Packages
-#  yum: pkg={{ item }} state=latest
-#  with_items:
-#          - wget
-#          - mariadb
-#          - mariadb-server
-#          - postfix
-#          - php
-#          - php-mysql
-#          - php-imap
-#          - php-mbstring
-#          - php-common
+- name: Install Packages
+  yum: pkg={{ item }} state=latest
+  with_items:
+          - wget
+          - mariadb
+          - mariadb-server
+          - postfix
+          - php
+          - php-mysql
+          - php-imap
+          - php-mbstring
+          - php-common
 
 - name: Start Mariadb
   service: name=mariadb state=started enabled=yes
 
+- name: Copy mariadb script
+  template: src=mysql.sh.js2 dest=/tmp/mysql.sh mode=0770
+  with_items: "{{ passw }}"
+
 - name: Initialise mariadb
-  script: files/mysql.sh
+  raw: bash /tmp/mysql.sh
   ignore_errors: yes
 
 - name: Adding root mysql without pass
   template: src=my.cnf.js2 dest=/root/.my.cnf force=no
   with_items: "{{ passw }}"
 
+- name: Mysql add postfix script        
+  template: src=postfix.sh.js2 dest=/tmp/postfix.sh mode=0770
+  with_items: "{{ passw }}"  
+
 - name: Mysql add postfix               
-  script: postfix.sh  
+  raw: /tmp/postfix.sh
             
 - name: Create mail user
   user: name=vmail state=present groups=mail shell=/sbin/nologin uid=150 home=/var/vmail comment="Virtual Mail User"
@@ -47,4 +55,4 @@
   pause: prompt='Please visit http://{{ inventory_hostname }}/postfixadmin-3.0.2/setup.php, once completed, Press Enter to continue OR Ctrl+c and then "a" to abort'
 
 - name: Create Postfix Admin User
-  raw: bash /var/www/html/postfixadmin-3.0.2/scripts/postfixadmin-cli admin add admin@your_domain_idroot.net --password mysqlpass123!! --password2 mysqlpass123!! --superadmin 1 --active 1
+  raw: bash /var/www/html/postfixadmin-3.0.2/scripts/postfixadmin-cli admin add admin@{{ inventory_hostname }} --password mysqlpass123\!\! --password2 mysqlpass123\!\! --superadmin 1 --active 1
