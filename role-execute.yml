@@ -1,0 +1,10 @@
+---
+ - hosts: xen.linuxpersonal.com
+   sudo: yes
+   user: ansible
+   connection: ssh
+   roles:
+           - { role: zabbix-agent, hostname: 'xen.linuxpersonal.com', ipaddress: '60.242.29.253' }
+             #           - { role: mailserver, passw: 'mysqlpass123!!' }
+             #           - vim8
+             #           - nginx
