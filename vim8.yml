@@ -1,7 +1,0 @@
----
- - hosts: nginx
-   sudo: yes
-   user: ansible
-   connection: ssh
-   roles:
-    - vim8
