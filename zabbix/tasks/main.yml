@@ -1,7 +1,0 @@
----
-# tasks file for apache
-- include: install.yml
-  vars:
-          hostname: xen.linuxpersonal.com
-          ipaddress: 10.1.1.112
-- include: service.yml
