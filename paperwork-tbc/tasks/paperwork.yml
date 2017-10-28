@@ -1,0 +1,46 @@
+---
+- name: Install Paperwork
+  script: files/paperworkinstall.sh 
+
+- name: Update database schema
+  expect: 
+        command: /usr/bin/php artisan migrate
+        responses:
+                Would you like to continue?: "yes"
+
+- name: Install npm/nodejs repo
+  shell: curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -
+
+- name: Install nodejs/npm
+  yum: pkg={{ item }} state=latest
+  with_items:
+          - nodejs
+          - gcc-c++
+          - make
+
+- name: NPM Install gulp
+  shell: npm install -g --save-dev gulp bower jshint gulp-jshint
+  args:
+          chdir: /var/www/html/paperwork/frontend
+
+- name: NPM Install 
+  shell: npm install
+  args:
+          chdir: /var/www/html/paperwork/frontend
+
+- name: Bower Install
+  shell: bower install
+  args:
+          chdir: /var/www/html/paperwork/frontend
+  
+- name: Gulp Install
+  shell: gulp
+  args:
+          chdir: /var/www/html/paperwork/frontend
+
+- name: Service Restart
+  service: name={{ item }} state=restarted
+  with_items:
+          - nginx
+          - php-fpm
+          - mariadb

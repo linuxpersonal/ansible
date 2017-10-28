@@ -1,0 +1,29 @@
+Steps to install LEMP Centos 7
+
+yum install epel-release -y
+yum install nginx -y
+yum install mariadb-server mariadb -y
+
+systemctl start nginx
+systemctl enable nginx
+
+systemctl start mariadb
+systemctl enable mariadb
+
+mysql_secure_installation -> echo -e "\ny\ny\nabc\nabc\ny\ny\ny\ny" | /usr/bin/mysql_secure_installation ??
+
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+rpm -Uvh remi-release-7.rpm
+yum install yum-utils -y
+yum-config-manager --enable remi-php71
+yum --enablerepo=remi,remi-php71 install php-fpm php-common
+yum --enablerepo=remi,remi-php71 install php-opcache php-pecl-apcu php-cli php-pear php-pdo php-mysqlnd php-pgsql php-pecl-mongodb php-pecl-redis php-pecl-memcache php-pecl-memcached php-gd php-mbstring php-mcrypt php-xml
+
+copy file over to remote host -> /etc/nginx/conf.d/default.conf
+
+systemctl restart nginx
+
+copy over /etc/php-fpm.d/www.conf
+
+systemctl start php-fpm.service
+systemctl enable php-fpm.service

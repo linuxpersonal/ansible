@@ -1,0 +1,13 @@
+---
+# handlers file for apache
+- name: Restart Nginx Service
+  service: name=nginx state=restarted
+  listen: "restart nginx"
+
+- name: Restart Phpfpm Service
+  service: name=php-fpm state=restarted
+  listen: "restart php-fpm"
+
+- name: Restart Mariadb Service
+  service: name=mariadb state=restarted
+  listen: "restart mariadb"
