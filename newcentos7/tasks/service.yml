@@ -1,5 +1,0 @@
---- # Start Apache Service
-#- name: Starting Apache Service
-#  service: name=httpd state=started
-- name: Starting Chronyd Service
-  service: name=chronyd state=started

@@ -1,6 +1,0 @@
----
-# handlers file for apache
-#- name: Restart Apache Service
-#  service: name=httpd state=restarted
-- name: Starting Chronyd Service
-  service: name=chronyd state=started
